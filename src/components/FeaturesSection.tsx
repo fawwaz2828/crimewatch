@@ -122,15 +122,6 @@ export function FeaturesSection() {
                 </Link>
               </Button>
             </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
-              <div className="flex flex-col items-center">
-                <div className="text-2xl font-bold text-black">Pariwisata</div>
-                <div className="text-sm text-gray-600">
-                  Pemilik & Pengelola Destinasi
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </div>
