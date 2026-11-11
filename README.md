@@ -306,12 +306,24 @@ npm install
 
 3. **Environment setup**
 
-```bash
-# Copy environment template
-cp .env.example .env.local
+Buat file `.env` di root project. File ini dibaca oleh Next.js dan juga oleh API Express (`dotenv`):
 
-# Edit environment variables
-nano .env.local
+```bash
+# Supabase (server / API)
+SUPABASE_URL=
+SUPABASE_ANON_KEY=
+SUPABASE_ROLE_KEY=
+
+# Supabase (browser)
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
+
+# OpenAI (chatbot)
+OPENAI_API_KEY=
+
+# Opsional
+PORT=3000
+# NEXT_PUBLIC_API_URL=   # isi hanya kalau API dijalankan di server lain
 ```
 
 4. **Run development server**
@@ -323,8 +335,36 @@ npm run dev
 5. **Access the application**
 
 ```
-http://localhost:3000
+http://localhost:3000        # aplikasi
+http://localhost:3000/api/*  # API
 ```
+
+### Struktur Project
+
+Frontend dan backend berjalan dalam **satu proses dan satu port**. `server/index.js` menjalankan Express: request ke `/api/*` ditangani route Express, sedangkan request lainnya diteruskan ke Next.js.
+
+```
+crimewatch/
+├── src/              # Next.js (halaman, komponen, hooks)
+├── public/
+├── server/
+│   ├── index.js      # entry point: Express + Next.js
+│   ├── app.js        # app Express & daftar route /api
+│   ├── routes/       # auth, admin, manager, kriminal, chatbot, public
+│   ├── middleware/
+│   ├── config/
+│   ├── utils/
+│   └── db.js         # klien Supabase
+└── package.json      # satu package.json untuk semuanya
+```
+
+| Perintah        | Fungsi                                                   |
+| --------------- | -------------------------------------------------------- |
+| `npm run dev`   | Mode development (Next hot reload + nodemon untuk `server/`) |
+| `npm run build` | Build Next.js                                            |
+| `npm start`     | Jalankan mode production (`npm run build` dulu)          |
+
+> Karena memakai custom server, aplikasi ini tidak bisa dideploy ke Vercel. Deploy ke Railway, VPS, atau Docker (`Dockerfile` sudah disediakan).
 
 ### Demo Accounts
 

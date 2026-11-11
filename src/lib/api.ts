@@ -3,7 +3,7 @@ import { supabase } from "./supabase";
 
 export const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL
   ? `${process.env.NEXT_PUBLIC_API_URL}/api`
-  : "https://crimewatch-be-production.up.railway.app/api";
+  : "/api"; // backend jalan di server yang sama
 
 const api = axios.create({
   baseURL: API_BASE_URL,

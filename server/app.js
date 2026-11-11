@@ -11,7 +11,8 @@ require("dotenv").config();
 
 const app = express();
 
-app.use(express.json());
+// Middleware hanya untuk /api, supaya request halaman/asset Next.js tidak tersentuh
+app.use("/api", express.json());
 
 const corsOptions = {
   origin: function (origin, callback) {
@@ -40,13 +41,13 @@ const corsOptions = {
   optionsSuccessStatus: 200,
 };
 
-app.use(cors(corsOptions));
+app.use("/api", cors(corsOptions));
 
 // Request logging middleware
-app.use((req, res, next) => {
+app.use("/api", (req, res, next) => {
   console.log("📨 INCOMING REQUEST:", {
     method: req.method,
-    url: req.url,
+    url: req.originalUrl,
     origin: req.headers.origin,
     authorization: req.headers.authorization ? "Bearer [TOKEN]" : "None",
     timestamp: new Date().toISOString(),
@@ -61,8 +62,4 @@ app.use("/api/kriminal", kriminalRoutes);
 app.use("/api/chatbot", chatbotRoutes);
 app.use("/api/public", publicRoutes);
 
-const port = process.env.PORT || 8000;
-
-app.listen(port, () => {
-  console.log(`Server berjalan di http://localhost:${port}`);
-});
+module.exports = app;

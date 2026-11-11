@@ -73,7 +73,7 @@ router.post("/register-manager", verifyToken, requireAdmin, async (req, res) => 
 
     try {
       // First create user in Supabase Auth
-      const { data: authUser, error: authError } = await supabase.auth.admin.createUser({
+      const { data: authUser, error: authError } = await db.auth.admin.createUser({
         email,
         password,
         email_confirm: true, // Auto-confirm email
@@ -110,7 +110,7 @@ router.post("/register-manager", verifyToken, requireAdmin, async (req, res) => 
 
       if (userError) {
         // Cleanup: delete auth user if database insertion fails
-        await supabase.auth.admin.deleteUser(authUserId);
+        await db.auth.admin.deleteUser(authUserId);
         console.error("Error creating user:", userError);
         return res.status(500).json({ error: "Gagal membuat user baru." });
       }
@@ -132,7 +132,7 @@ router.post("/register-manager", verifyToken, requireAdmin, async (req, res) => 
 
       if (managerError) {
         // Cleanup: delete both auth user and database user if manager details insertion fails
-        await supabase.auth.admin.deleteUser(authUserId);
+        await db.auth.admin.deleteUser(authUserId);
         await db.from('user').delete().eq('id', userId);
         console.error("Error creating manager details:", managerError);
         return res.status(500).json({ error: "Gagal membuat detail manager." });

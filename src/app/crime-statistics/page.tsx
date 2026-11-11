@@ -304,8 +304,8 @@ function CrimeStatisticsContent() {
                   outerRadius={80}
                   fill="#8884d8"
                   dataKey="count"
-                  label={({ category, percentage }) =>
-                    `${category}: ${percentage}%`
+                  label={({ payload }) =>
+                    `${payload.category}: ${payload.percentage}%`
                   }
                   labelLine={false}
                 >

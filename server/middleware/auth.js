@@ -1,4 +1,5 @@
 const { createClient } = require('@supabase/supabase-js');
+const db = require('../db');
 require('dotenv').config();
 
 const supabase = createClient(
@@ -34,7 +35,7 @@ const verifyToken = async (req, res, next) => {
     }
 
     // Get user metadata including role from the user table
-    const { data: userData, error: userError } = await supabase
+    const { data: userData, error: userError } = await db
       .from('user')
       .select('id, email, nama, role, status')
       .eq('email', user.email)
