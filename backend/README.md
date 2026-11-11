@@ -1,0 +1,10 @@
+- Dependencies yang diperlukan:
+  - node.js dan npm
+  - express.js (npm)
+  - express-session (npm)
+  - mysql2 (npm)
+  - bycrypt (npm)
+  - multer (npm)
+  - csv-parser (npm)
+  - openai (npm)
+- sama pastikan tablenya di database crimewatch
